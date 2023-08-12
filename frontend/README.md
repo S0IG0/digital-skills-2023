@@ -1,3 +1,10 @@
+Реализовано приложение React + TypeScript + Vite с бэком на jango. 
+Реализован модуль 1 на 10%
+Реализован модуль 2 на 10%
+Зато мы узнали сегодня много нового!!! Спасибо за интересное задание, на досуге порешаем для себя.
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
