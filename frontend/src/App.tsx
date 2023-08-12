@@ -1,11 +1,10 @@
-import { useState, ChangeEvent, FormEvent } from 'react'; // Импорт React и необходимых типов
+import { useState, ChangeEvent, FormEvent } from 'react';
 import danyaLogo from './assets/logo.png';
 import './App.css';
 
 function App() {
-    const [selectedFiles, setSelectedFiles] = useState<File[]>([]); // Указание типа для состояния
+    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-    // Обработчик изменения выбранных файлов
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
             const filesArray = Array.from(event.target.files);
@@ -13,14 +12,31 @@ function App() {
         }
     };
 
-    // Обработчик отправки формы
-    const handleUpload = (event: FormEvent) => {
+    const handleUpload = async (event: FormEvent) => {
         event.preventDefault();
-        // Обработка загрузки данных, используя selectedFiles
-        console.log(selectedFiles);
-        // Добавьте код для отправки файлов на сервер
-        // POST localhost/upload
-        // файлы с ключом files
+
+        const formData = new FormData();
+        selectedFiles.forEach(file => {
+            formData.append('files', file);
+        });
+
+        try {
+            const response = await fetch('http://localhost/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                console.log('Files uploaded successfully');
+                // Дополнительная логика по успешной загрузке файлов
+            } else {
+                console.error('Error uploading files');
+                // Дополнительная логика по ошибке загрузки файлов
+            }
+        } catch (error) {
+            console.error('An error occurred', error);
+            // Дополнительная логика по обработке ошибки запроса
+        }
     };
 
     return (
@@ -33,13 +49,11 @@ function App() {
                     </a>
                 </div>
             </nav>
-            {/* Форма загрузки файлов */}
             <div className="col-md-6">
                 <h2>Загрузка данных</h2>
                 <form onSubmit={handleUpload}>
                     <div className="mb-3">
                         <label htmlFor="fileInput" className="form-label">Выберите файлы</label>
-                        {/* Поле выбора файлов */}
                         <input
                             type="file"
                             className="form-control"
@@ -48,7 +62,6 @@ function App() {
                             onChange={handleFileChange}
                         />
                     </div>
-                    {/* Кнопка отправки формы */}
                     <button type="submit" className="btn btn-primary">Загрузить</button>
                 </form>
             </div>
