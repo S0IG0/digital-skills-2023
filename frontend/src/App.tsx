@@ -1,6 +1,8 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
+import axios from 'axios'; // Импорт библиотеки Axios
 import danyaLogo from './assets/logo.png';
 import './App.css';
+
 
 function App() {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -21,12 +23,9 @@ function App() {
         });
 
         try {
-            const response = await fetch('http://localhost/upload', {
-                method: 'POST',
-                body: formData
-            });
+            const response = await axios.post('http://localhost/upload', formData);
 
-            if (response.ok) {
+            if (response.status === 200) {
                 console.log('Files uploaded successfully');
                 // Дополнительная логика по успешной загрузке файлов
             } else {
