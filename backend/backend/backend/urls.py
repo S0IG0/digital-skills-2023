@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 
-from uplaod.views import FileUploadView
+from upload.views import FileUploadView
 
 urlpatterns = [
     path("api/admin/", admin.site.urls),
