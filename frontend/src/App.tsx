@@ -23,7 +23,7 @@ function App() {
         });
 
         try {
-            const response = await axios.post('http://localhost/upload', formData);
+            const response = await axios.post('http://localhost/api/upload', formData);
 
             if (response.status === 200) {
                 console.log('Files uploaded successfully');
